@@ -1,0 +1,59 @@
+class Nodo:
+    def __init__(self, valor):
+        self.valor = valor
+        self.izquierdo = None
+        self.derecho = None
+
+class ArbolBinarioBusqueda:
+    def __init__(self):
+        self.raiz = None
+
+    def insertar(self, valor):
+        self.raiz = self._insertar(self.raiz, valor)
+
+    def _insertar(self, nodo, valor):
+        if nodo is None:
+            return Nodo(valor)
+        if valor < nodo.valor:
+            nodo.izquierdo = self._insertar(nodo.izquierdo, valor)
+        elif valor > nodo.valor:
+            nodo.derecho = self._insertar(nodo.derecho, valor)
+        return nodo
+
+    def buscar(self, valor):
+        return self._buscar(self.raiz, valor)
+
+    def _buscar(self, nodo, valor):
+        if nodo is None or nodo.valor == valor:
+            return nodo
+        if valor < nodo.valor:
+            return self._buscar(nodo.izquierdo, valor)
+        return self._buscar(nodo.derecho, valor)
+
+    def imprimir_inorden(self):
+        self._imprimir_inorden(self.raiz)
+
+    def _imprimir_inorden(self, nodo):
+        if nodo:
+            self._imprimir_inorden(nodo.izquierdo)
+            print(nodo.valor, end=' ')
+            self._imprimir_inorden(nodo.derecho)
+
+# Ejemplo de uso:
+arbol = ArbolBinarioBusqueda()
+arbol.insertar(5)
+arbol.insertar(3)
+arbol.insertar(7)
+arbol.insertar(2)
+arbol.insertar(4)
+
+print("Recorrido inorden del árbol:")
+arbol.imprimir_inorden()
+
+# Buscar un valor
+valor_a_buscar = 4
+nodo_encontrado = arbol.buscar(valor_a_buscar)
+if nodo_encontrado:
+    print(f"\nEl valor {valor_a_buscar} fue encontrado en el árbol.")
+else:
+    print(f"\nEl valor {valor_a_buscar} no fue encontrado en el árbol.")
